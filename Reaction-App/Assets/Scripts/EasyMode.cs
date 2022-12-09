@@ -17,10 +17,15 @@ public class EasyMode : GameManager
 
     public int score = 0;
     public float difficulty;
+    public int pNumber = 0;
 
     void start()
     {
         selected = (int) Mathf.Round(Random.Range(0, numShapes));
+    }
+
+    void GetStatusesAfter() {
+        StartCoroutine(this.GetRequestPlayer("https://backend-dot-lightscreendotart.uk.r.appspot.com/unitygetstatuses", true));
     }
 
     // Update is called once per frame
@@ -52,6 +57,7 @@ public class EasyMode : GameManager
             }
             else
             {
+                StartCoroutine(GetRequest("https://backend-dot-lightscreendotart.uk.r.appspot.com/unityupdatescore?playerNumber="+pNumber.ToString()+"&playerScore="+this.score.ToString()));
                 on = false;
                 buttons[selected].GetComponent<ButtonClickListener>().touched = false;
                 buttons[selected].GetComponent<ButtonClickListener>().isOn = false;
